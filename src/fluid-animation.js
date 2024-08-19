@@ -137,11 +137,13 @@ export default class FluidAnimation {
   onTouchMove = (e) => {
     for (let i = 0; i < e.touches.length; ++i) {
       const touch = e.touches[i]
+      const offsetX = touch.pageX - touch.target.offsetLeft
+      const offsetY = touch.pageY - touch.target.offsetTop
       this._pointers[i].moved = this._pointers[i].down
-      this._pointers[i].dx = (touch.clientX - this._pointers[i].x) * 10.0
-      this._pointers[i].dy = (touch.clientY - this._pointers[i].y) * 10.0
-      this._pointers[i].x = touch.clientX
-      this._pointers[i].y = touch.clientY
+      this._pointers[i].dx = (offsetX - this._pointers[i].x) * 10.0
+      this._pointers[i].dy = (offsetY - this._pointers[i].y) * 10.0
+      this._pointers[i].x = offsetX
+      this._pointers[i].y = offsetY
     }
   }
 
