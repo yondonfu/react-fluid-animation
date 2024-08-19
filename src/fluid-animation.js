@@ -103,11 +103,16 @@ export default class FluidAnimation {
   }
 
   onMouseMove = (e) => {
+    const displayOffsetX = e.offsetX
+    const displayOffsetY = e.offsetY
+    const offsetX = (displayOffsetX / parseInt(this._canvas.style.width) || 1) * this._canvas.width
+    const offsetY = (displayOffsetY / parseInt(this._canvas.style.height) || 1) * this._canvas.height
+
     this._pointers[0].moved = this._pointers[0].down
-    this._pointers[0].dx = (e.offsetX - this._pointers[0].x) * 10.0
-    this._pointers[0].dy = (e.offsetY - this._pointers[0].y) * 10.0
-    this._pointers[0].x = e.offsetX
-    this._pointers[0].y = e.offsetY
+    this._pointers[0].dx = (offsetX - this._pointers[0].x) * 10.0
+    this._pointers[0].dy = (offsetY - this._pointers[0].y) * 10.0
+    this._pointers[0].x = offsetX
+    this._pointers[0].y = offsetY
   }
 
   onMouseDown = (e) => {
@@ -137,8 +142,12 @@ export default class FluidAnimation {
   onTouchMove = (e) => {
     for (let i = 0; i < e.touches.length; ++i) {
       const touch = e.touches[i]
-      const offsetX = touch.pageX - touch.target.offsetLeft
-      const offsetY = touch.pageY - touch.target.offsetTop
+      const displayOffsetX = touch.pageX - touch.target.offsetLeft
+      const displayOffsetY = touch.pageY - touch.target.offsetTop
+
+      const offsetX = (displayOffsetX / parseInt(this._canvas.style.width) || 1) * this._canvas.width
+      const offsetY = (displayOffsetY / parseInt(this._canvas.style.height) || 1) * this._canvas.height
+
       this._pointers[i].moved = this._pointers[i].down
       this._pointers[i].dx = (offsetX - this._pointers[i].x) * 10.0
       this._pointers[i].dy = (offsetY - this._pointers[i].y) * 10.0
