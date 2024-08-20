@@ -142,8 +142,8 @@ export default class FluidAnimation {
   onTouchMove = (e) => {
     for (let i = 0; i < e.touches.length; ++i) {
       const touch = e.touches[i]
-      const displayOffsetX = touch.pageX - touch.target.offsetLeft
-      const displayOffsetY = touch.pageY - touch.target.offsetTop
+      const displayOffsetX = touch.clientX - touch.target.offsetLeft
+      const displayOffsetY = touch.clientY - touch.target.offsetTop
 
       const offsetX = (displayOffsetX / parseInt(this._canvas.style.width) || 1) * this._canvas.width
       const offsetY = (displayOffsetY / parseInt(this._canvas.style.height) || 1) * this._canvas.height
